@@ -3,6 +3,7 @@ const dotenv = require('dotenv')
 const colors = require('colors')
 const morgan = require('morgan')
 const connectDB = require('./config/db')
+const cors = require('cors')
 
 const menuItemRouter = require('./routes/menuItems')
 const userAuthRouter = require('./routes/userAuth')
@@ -18,6 +19,7 @@ connectDB()
 const app = express()
 
 app.use(express.json())
+app.use(cors())
 
 app.use('/api/v1/restaurants', restaurantsRouter)
 app.use('/api/v1/restaurantsauth', restaurantAuthRouter)
