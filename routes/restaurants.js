@@ -15,7 +15,7 @@ router.use('/:restaurantId/tables', tablesRouter)
 router.use('/:restaurantId/menuitems', menuItemsRouter)
 
 router.get('/', getRestaurants)
-router.get(':/id', getRestaurant)
+router.get('/:id', getRestaurant)
 router.delete('/:id', deleteRestaurant)
 
 module.exports = router
