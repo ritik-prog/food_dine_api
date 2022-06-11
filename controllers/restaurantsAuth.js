@@ -18,6 +18,7 @@ const createSendToken = (restaurant, statusCode, res) => {
 };
 
 exports.signup = catchAsync(async (req, res, next) => {
+  console.log(req.body)
   const restaurant = await Restaurant.create({
     name: req.body.name,
     email: req.body.email,
