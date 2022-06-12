@@ -22,28 +22,28 @@ const app = express();
 app.use(express.json());
 
 
-if (process.env.NODE_ENV === 'development') {
-  app.use(morgan('dev'));
-}
+// if (process.env.NODE_ENV === 'development') {
+//   app.use(morgan('dev'));
+// }
 
-// ****** Security Middlewares ********
-//Sanitize data
-app.use(mongoSanitize());
-//Set Security headers
-app.use(helmet());
-//Prevent XSS - Cross site scripting attack
-app.use(xssClean());
-// Limiting requests
-app.use(
-  rateLimiter({
-    windowMs: 10 * 60 * 1000, // 10 minutes
-    max: 100, //  Max 100 request in the set duration
-  })
-);
-// Prevent Http params pollution
-app.use(hpp());
-// Enable Cross Site Resource Sharing
-app.use(cors());
+// // ****** Security Middlewares ********
+// //Sanitize data
+// app.use(mongoSanitize());
+// //Set Security headers
+// app.use(helmet());
+// //Prevent XSS - Cross site scripting attack
+// app.use(xssClean());
+// // Limiting requests
+// app.use(
+//   rateLimiter({
+//     windowMs: 10 * 60 * 1000, // 10 minutes
+//     max: 100, //  Max 100 request in the set duration
+//   })
+// );
+// // Prevent Http params pollution
+// app.use(hpp());
+// // Enable Cross Site Resource Sharing
+// app.use(cors());
 
 app.use("/api/v1/restaurants", restaurantsRouter);
 app.use("/api/v1/restaurantsauth", restaurantAuthRouter);
@@ -60,7 +60,7 @@ app.all('*', (req, res, next) => {
   );
 });
 
-app.use(errorHandler);
+// app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {
