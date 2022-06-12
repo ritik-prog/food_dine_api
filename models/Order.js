@@ -18,11 +18,27 @@ const orderSchema = mongoose.Schema({
         ref: 'Table',
         required: true
     },
-    userId: {
-        type: mongoose.Schema.ObjectId,
-        ref: 'User',
-        required: true
+    mobileNumber: {
+        type: Number,
+        min: 1000000000,
+        max: 9999999999,
+        required: [true, "Please provide your mobile number to place your order"]
     },
+    isPaymentComplete: {
+        type: Boolean,
+        default: false
+    },
+    status: {
+        type: String,
+        default: 'ordered',
+        enum: ['ordered', 'Preparing', 'Delivered', 'Cancelled'],
+        required: [true, "Order must have a status"]
+    },
+    // userId: {
+    //     type: mongoose.Schema.ObjectId,
+    //     ref: 'User',
+    //     required: true
+    // },
     menuItemsId: {
         type: [mongoose.Schema.ObjectId],
         ref: 'Restaurant',

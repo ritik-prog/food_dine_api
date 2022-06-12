@@ -32,15 +32,8 @@ exports.getOrders = catchAsync(async (req, res, next) => {
   } else {
     res.status(400).json({
         success: false,
-        message: 'Not Allowed'
+        message: 'Not Allowed. Only Available for Admins'
     })
-    // const features = new APIFeatures(Blog.find(), req.query)
-    //   .filter()
-    //   .sort()
-    //   .limitFields()
-    //   .paginate();
-    // const orders = await features.query;
-    // res.status(200).json({ success: true, count: orders.length, data: orders });
   }
 });
 
@@ -85,7 +78,7 @@ exports.updateOrder = catchAsync(async (req, res, next) => {
 // @route       : DELETE /api/v1/orders/:id
 // @desc        : Cancel A Order
 // @access      : Private
-exports.cancelOrder = catchAsync(async (req, res, next) => {
+exports.deleteOrder = catchAsync(async (req, res, next) => {
   const order = await Order.findByIdAndDelete(req.params.id);
   if (!order) {
     return next(
