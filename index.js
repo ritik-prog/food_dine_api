@@ -11,6 +11,7 @@ const restaurantsRouter = require("./routes/restaurants");
 const tablesRouter = require("./routes/tables");
 const userRouter = require("./routes/users");
 const restaurantAuthRouter = require("./routes/restaurantAuth");
+const orderRouter = require('./routes/orders')
 
 dotenv.config({ path: "./config/config.env" });
 
@@ -50,6 +51,7 @@ app.use("/api/v1/menuitems", menuItemRouter);
 app.use("/api/v1/tables", tablesRouter);
 app.use("/api/v1/users", userRouter);
 app.use("/api/v1/auth", userAuthRouter);
+app.use('/api/v1/orders', orderRouter);
 
 // Error Handling
 app.all('*', (req, res, next) => {

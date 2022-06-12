@@ -51,17 +51,18 @@ exports.getOrder = catchAsync(async (req, res, next) => {
   }
   res.status(200).json({ success: true, data: order });
 });
+ 
+// exports.checkout = catchAsync(async (req, res, next) => {
+//   const paymentLink = await stripe.paymentLinks.create({
+//     line_items: [{price: `{{${req.body.price}}}`, quantity: req.body.quantity}],
+//     after_completion: {type: 'redirect', redirect: {url: 'https://localhost/'}},
+//   });
+//   res.status(200).json({
+//     success: true,
+//     paymentLink
+//   })
+// })
 
-exports.checkout = catchAsync(async (req, res, next) => {
-  const paymentLink = await stripe.paymentLinks.create({
-    line_items: [{price: `{{${req.body.price}}}`, quantity: req.body.quantity}],
-    after_completion: {type: 'redirect', redirect: {url: 'https://localhost/'}},
-  });
-  res.status(200).json({
-    success: true,
-    paymentLink
-  })
-})
 
 // @route       : POST /api/v1/restaurant/:restaurantId/orders
 // @desc        : Create a Order
