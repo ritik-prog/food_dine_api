@@ -49,7 +49,7 @@ app.use("/api/v1/restaurantsauth", restaurantAuthRouter);
 app.use("/api/v1/menuitems", menuItemRouter);
 app.use("/api/v1/tables", tablesRouter);
 app.use("/api/v1/users", userRouter);
-app.use("/api/v1/auth/", userAuthRouter);
+app.use("/api/v1/auth", userAuthRouter);
 
 // Error Handling
 app.all('*', (req, res, next) => {
