@@ -8,6 +8,6 @@ router.route('/').get(getOrders).post(placeOrder)
 
 router.route('/:id').get(getOrder).put(updateOrder).delete(deleteOrder)
 
-router.get('/:id/checkout', checkout)
+router.get('/checkout', checkout)
 
 module.exports = router
