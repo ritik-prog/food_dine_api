@@ -3,6 +3,8 @@ const Restaurant = require('../models/Restaurant');
 const APIFeatures = require('../utils/apiFeatures');
 const catchAsync = require('../utils/catchAsync');
 const AppError = require('../utils/appError');
+const stripe = require('stripe')('sk_test_51HTOQGCH0xfOm9H9ujz5abKOHavrEAl4QKZEPv7tbq37Ins0Pp9jOpyIIZRKL4dFz37llv6D0Z0kDU8Io5FG4nLu00KIFfjC1b');
+
 
 // @route       : GET /api/v1/orders
 // @route       : GET /api/v1/restaurants/:restaurantId/orders
@@ -32,15 +34,8 @@ exports.getOrders = catchAsync(async (req, res, next) => {
   } else {
     res.status(400).json({
         success: false,
-        message: 'Not Allowed'
+        message: 'Not Allowed. Only Available for Admins'
     })
-    // const features = new APIFeatures(Blog.find(), req.query)
-    //   .filter()
-    //   .sort()
-    //   .limitFields()
-    //   .paginate();
-    // const orders = await features.query;
-    // res.status(200).json({ success: true, count: orders.length, data: orders });
   }
 });
 
@@ -56,6 +51,17 @@ exports.getOrder = catchAsync(async (req, res, next) => {
   }
   res.status(200).json({ success: true, data: order });
 });
+
+exports.checkout = catchAsync(async (req, res, next) => {
+  const paymentLink = await stripe.paymentLinks.create({
+    line_items: [{price: `{{${req.body.price}}}`, quantity: req.body.quantity}],
+    after_completion: {type: 'redirect', redirect: {url: 'https://localhost/'}},
+  });
+  res.status(200).json({
+    success: true,
+    paymentLink
+  })
+})
 
 // @route       : POST /api/v1/restaurant/:restaurantId/orders
 // @desc        : Create a Order
@@ -85,7 +91,7 @@ exports.updateOrder = catchAsync(async (req, res, next) => {
 // @route       : DELETE /api/v1/orders/:id
 // @desc        : Cancel A Order
 // @access      : Private
-exports.cancelOrder = catchAsync(async (req, res, next) => {
+exports.deleteOrder = catchAsync(async (req, res, next) => {
   const order = await Order.findByIdAndDelete(req.params.id);
   if (!order) {
     return next(
